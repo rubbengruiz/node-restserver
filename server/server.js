@@ -1,35 +1,21 @@
 require('./config/config');
 
+const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 
 const bodyParser = require('body-parser');
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false })); 
-// parse application/json
-app.use(bodyParser.json())
- 
-app.get('/usuario', function (req, res) {
-    res.json('GET Server')
-})
+app.use(bodyParser.json());
+app.use(require('./routes/users'));
 
-app.post('/usuario', function (req, res) {
-    let body = req.body;
-    res.json({
-        persona: body
-    })
-})
+mongoose.connect(process.env.URLDB, 
+    {useNewUrlParser: true, useCreateIndex: true}, 
+    (err, resp) => {
+        if (err) throw err;
 
-app.put('/usuario/:id', function (req, res) {
-    let id = req.params.id;
-    res.json({
-        id
-    })
-})
-
-app.delete('/usuario', function (req, res) {
-    res.json('DELETE Server')
-})
+        console.log('Base de Datos On-line...');
+    });
  
 app.listen(process.env.PORT, () => {
     console.log('Escuchando peticiones...');
