@@ -17,3 +17,6 @@ let urldb = process.env.NODE_ENV === 'dev'
     : process.env.MONGO_URI;
 
 process.env.URLDB = urldb;
+
+// GOOGLE CLIENT ID
+process.env.CLIENT_ID = process.env.CLIENT_ID || '956198755353-bkm62nltr728l0sg6ggj6f3gtlretfo3.apps.googleusercontent.com';
