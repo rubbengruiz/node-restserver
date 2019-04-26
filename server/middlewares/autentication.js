@@ -36,7 +36,27 @@ let verificaAdmin_Role = (req, res, next) => {
     next();
 };
 
+// Verificar TOKEN Imagen
+let verificaTokenImg = (req, res, next) => {
+    let token = req.query.token;
+
+    jwt.verify(token, process.env.SEED, (err, decode) => {
+        if (err) {
+            return res.status(401).json({
+                ok: false,
+                err: {
+                    message: 'Token de autorización inválido'
+                }
+            });
+        }
+
+        req.usuario = decode.usuario;
+        next();
+    })
+};
+
 module.exports = { 
     verificaToken,
-    verificaAdmin_Role
+    verificaAdmin_Role,
+    verificaTokenImg
 };

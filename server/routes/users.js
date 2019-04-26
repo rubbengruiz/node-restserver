@@ -14,8 +14,8 @@ app.get('/usuario', verificaToken, (req, res) => {
     limite = Number(limite);
 
     User.find({ estado: true }, 'nombre email role estado google')
-    .skip(desde)    
-    .limit(limite)
+        .skip(desde)    
+        .limit(limite)
         .exec( (err, usuarios) => {
             if (err) {
                 return res.status(400).json({
@@ -39,7 +39,7 @@ app.post('/usuario', [verificaToken, verificaAdmin_Role], (req, res) => {
     let user = new User({
         nombre: body.nombre,
         email: body.email,
-        password: bcrypt.hashSync(body.password,10),
+        password: bcrypt.hashSync(body.password, 10),
         role: body.role
     });
 
